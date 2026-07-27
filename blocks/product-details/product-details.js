@@ -127,6 +127,7 @@ export default async function decorate(block) {
         </div>
         <div class="product-details__description"></div>
         <div class="product-details__attributes"></div>
+        <div class="product-details__custom-attribute"></div>
       </div>
     </div>
   `);
@@ -155,6 +156,9 @@ export default async function decorate(block) {
   );
   const $description = fragment.querySelector('.product-details__description');
   const $attributes = fragment.querySelector('.product-details__attributes');
+  const $customAttribute = fragment.querySelector(
+    '.product-details__custom-attribute',
+  );
   const $tagline = fragment.querySelector('.product-details__tagline');
 
   block.replaceChildren(fragment);
@@ -169,6 +173,16 @@ export default async function decorate(block) {
       } else {
         $stock.textContent = '● Out of Stock';
         $stock.className = 'product-details__stock stock-badge stock-badge--out-of-stock';
+      }
+
+      const value = product.metaTitle;
+      if (value) {
+        $customAttribute.innerHTML = `
+        <div class="custom-attribute">
+          <dt>Custom Attribute Label</dt>
+          <dd>${value}</dd>
+        </div>
+        `;
       }
     },
     { eager: true },
